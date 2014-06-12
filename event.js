@@ -76,7 +76,7 @@ define([], function() {
     };
 
     Vent.implementOn = function(klass) {
-        var methods = ['subscribe', 'unsubscribe', 'publish'];
+        var methods = ['subscribe', 'unsubscribe', 'publish', 'isSubscribed'];
         methods.forEach(function(m) {
             klass.prototype[m] = Vent.prototype[m];
         });
