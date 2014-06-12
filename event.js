@@ -2,11 +2,12 @@
 define([], function() {
     'use strict';
 
-    var e = function() {
+    var Vent = function() {
         this.__subscriptions = {};
     };
 
-    e.prototype.isSubscribed = function(name, callback, bind) {
+    Vent.prototype.isSubscribed = function(name, callback, bind) {
+        this.__subscriptions = this.__subscriptions || {};
         bind = bind || this;
 
         if(name in this.__subscriptions) {
@@ -22,7 +23,8 @@ define([], function() {
         return false;
     };
 
-    e.prototype.subscribe = function(name, callback, bind) {
+    Vent.prototype.subscribe = function(name, callback, bind) {
+        this.__subscriptions = this.__subscriptions || {};
         if(!(name in this.__subscriptions)) {
             this.__subscriptions[name] = [];
         }
@@ -37,7 +39,8 @@ define([], function() {
         }
     };
 
-    e.prototype.unsubscribe = function(name, callback, bind) {
+    Vent.prototype.unsubscribe = function(name, callback, bind) {
+        this.__subscriptions = this.__subscriptions || {};
         bind = bind || this;
 
         if(this.isSubscribed(name, callback, bind)) {
@@ -53,7 +56,8 @@ define([], function() {
         }
     };
 
-    e.prototype.publish = function(/* name, args */) {
+    Vent.prototype.publish = function(/* name, args */) {
+        this.__subscriptions = this.__subscriptions || {};
         var args = Array.prototype.slice.call(arguments);
         var name = args.shift();
 
@@ -71,5 +75,14 @@ define([], function() {
         }
     };
 
-    return e;
+    Vent.implementOn = function(klass) {
+        var methods = ['subscribe', 'unsubscribe', 'publish'];
+        methods.forEach(function(m) {
+            klass.prototype[m] = Vent.prototype[m];
+        });
+
+        return klass;
+    };
+
+    return Vent;
 });
