@@ -1,0 +1,24 @@
+{
+  "name": "Event.js",
+  "main": "Event.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/gfarrell/Event.js",
+  "authors": [
+    "Gideon Farrell <me@gideonfarrell.co.uk>"
+  ],
+  "description": "A small event pub/sub library.",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "event",
+    "pubsub",
+    "bind",
+    "event-aggregator"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "requirejs": "~2.1.14",
+    "jasmine": "~2.0.0"
+  }
+}
