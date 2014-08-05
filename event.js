@@ -1,5 +1,5 @@
-/* global define */
-define([], function() {
+/* global define, module */
+(function() {
     'use strict';
 
     var Vent = function() {
@@ -84,5 +84,13 @@ define([], function() {
         return klass;
     };
 
-    return Vent;
-});
+    // AMD - requirejs
+    if(typeof define == 'function') {
+        define([], function() { return Vent; });
+    }
+
+    // Node.js / CommonJS module
+    if(typeof module != 'undefined') {
+        module.exports = Vent;
+    }
+})();
