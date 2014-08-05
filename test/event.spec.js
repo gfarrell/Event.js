@@ -83,7 +83,7 @@ define(['jasmine/boot', 'event'], function() {
             expect(Foo.prototype.subscribe).toBeUndefined();
             expect(Foo.prototype.unsubscribe).toBeUndefined();
 
-            Vent.implementOn(Foo);
+            Vent.implementOn(Foo.prototype);
 
             expect(typeof Foo.prototype.publish).toBe('function');
             expect(typeof Foo.prototype.subscribe).toBe('function');

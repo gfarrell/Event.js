@@ -78,7 +78,7 @@
     Vent.implementOn = function(klass) {
         var methods = ['subscribe', 'unsubscribe', 'publish', 'isSubscribed'];
         methods.forEach(function(m) {
-            klass.prototype[m] = Vent.prototype[m];
+            klass[m] = Vent.prototype[m];
         });
 
         return klass;
