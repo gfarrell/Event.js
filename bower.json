@@ -1,6 +1,6 @@
 {
-  "name": "Event.js",
-  "main": "Event.js",
+  "name": "event.js",
+  "main": "event.js",
   "version": "1.1.0",
   "homepage": "https://github.com/gfarrell/Event.js",
   "authors": [
