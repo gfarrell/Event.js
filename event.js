@@ -2,10 +2,20 @@
 (function() {
     'use strict';
 
+    /**
+     * Constructor for new Vent object
+     */
     var Vent = function() {
         this.__subscriptions = {};
     };
 
+    /**
+     * Checks if a callback is already subscribed to an event.
+     * @param {String}   name     the event name
+     * @param {Function} callback the callback to check
+     * @param {Object}   bind     the originally bound object [optional]
+     * @return {Boolean}          whether or not the callback is already subscribed
+     */
     Vent.prototype.isSubscribed = function(name, callback, bind) {
         this.__subscriptions = this.__subscriptions || {};
         bind = bind || this;
@@ -23,6 +33,12 @@
         return false;
     };
 
+    /**
+     * Subscribe to an event
+     * @param  {String}   name     the event name
+     * @param  {Function} callback the callback to trigger
+     * @param  {Object}   bind     an object to bind to (e.g. class instance)
+     */
     Vent.prototype.subscribe = function(name, callback, bind) {
         this.__subscriptions = this.__subscriptions || {};
         if(!(name in this.__subscriptions)) {
@@ -39,6 +55,12 @@
         }
     };
 
+    /**
+     * Unsubscribe from an event
+     * @param  {String}   name     the event name
+     * @param  {Function} callback the callback to unsubscribe
+     * @param  {Object}   bind     the original object binding
+     */
     Vent.prototype.unsubscribe = function(name, callback, bind) {
         this.__subscriptions = this.__subscriptions || {};
         bind = bind || this;
@@ -56,6 +78,10 @@
         }
     };
 
+    /**
+     * Publish an event, all aguments after name are passed to the callbacks
+     * @param  {String} name  the event name
+     */
     Vent.prototype.publish = function(/* name, args */) {
         this.__subscriptions = this.__subscriptions || {};
         var args = Array.prototype.slice.call(arguments);
@@ -75,6 +101,10 @@
         }
     };
 
+    /**
+     * Implement Vent's functionality on another class
+     * @param {Object} klass the object (e.g. class.prototype) to implement on.
+     */
     Vent.implementOn = function(klass) {
         var methods = ['subscribe', 'unsubscribe', 'publish', 'isSubscribed'];
         methods.forEach(function(m) {
