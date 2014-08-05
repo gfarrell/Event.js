@@ -47,7 +47,7 @@ This will call each subscribed callback with two arguments, `"Hello"` and `"Worl
 
 Event.js can implement the pub/sub functionality on any other class using the `implementOn` class method:
 
-    Vent.implementOn(MyClass);
+    Vent.implementOn(MyClass.prototype);
 
 Then you can use it as before:
 
