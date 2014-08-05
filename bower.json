@@ -6,9 +6,11 @@
   "authors": [
     "Gideon Farrell <me@gideonfarrell.co.uk>"
   ],
-  "description": "A small event pub/sub library.",
+  "description": "Event.js tries to plug the gaps in other event pub/sub bind/trigger or whatever-method-you-use libraries. It's extremely simple, but shouldn't do anything you don't expect.",
   "moduleType": [
-    "amd"
+    "amd",
+    "commonjs",
+    "node"
   ],
   "keywords": [
     "event",

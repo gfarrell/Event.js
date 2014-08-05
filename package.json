@@ -1,0 +1,28 @@
+{
+  "name": "Event.js",
+  "version": "1.1.0",
+  "description": "Event.js tries to plug the gaps in other event pub/sub bind/trigger or whatever-method-you-use libraries. It's extremely simple, but shouldn't do anything you don't expect.",
+  "main": "event.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "open ./test/test.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gfarrell/Event.js.git"
+  },
+  "keywords": [
+    "event",
+    "pub/sub",
+    "pub-sub",
+    "listener"
+  ],
+  "author": "Gideon Farrell <me@gideonfarrell.co.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gfarrell/Event.js/issues"
+  },
+  "homepage": "https://github.com/gfarrell/Event.js"
+}
