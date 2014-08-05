@@ -153,7 +153,7 @@
      * @param {Object} klass the object (e.g. class.prototype) to implement on.
      */
     Vent.implementOn = function(klass) {
-        var methods = ['subscribe', 'unsubscribe', 'publish', 'isSubscribed'];
+        var methods = ['retrieveSubscription', 'subscribe', 'subscribeOnce', 'unsubscribe', 'publish', 'isSubscribed'];
         methods.forEach(function(m) {
             klass[m] = Vent.prototype[m];
         });
