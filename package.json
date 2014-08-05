@@ -15,12 +15,12 @@
   },
   "keywords": [
     "event",
-    "pub/sub",
-    "pub-sub",
-    "listener"
+    "pubsub",
+    "bind",
+    "event-aggregator"
   ],
   "author": "Gideon Farrell <me@gideonfarrell.co.uk>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gfarrell/Event.js/issues"
   },
