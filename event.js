@@ -10,6 +10,30 @@
     };
 
     /**
+     * Retrieves the subscription object.
+     * @param {String}   name     the event name
+     * @param {Function} callback the callback to check
+     * @param {Object}   bind     the originally bound object [optional]
+     * @return {Object}           the subscription object or null
+     */
+    Vent.prototype.retrieveSubscription = function (name, callback, bind) {
+        this.__subscriptions = this.__subscriptions || {};
+        bind = bind || this;
+
+        if(name in this.__subscriptions) {
+            for(var i in this.__subscriptions[name]) {
+                var sub = this.__subscriptions[name][i];
+                var cb = sub.callback;
+                var b  = sub.bind;
+
+                if(cb === callback && b === bind) return sub;
+            }
+        }
+
+        return null;
+    };
+
+    /**
      * Checks if a callback is already subscribed to an event.
      * @param {String}   name     the event name
      * @param {Function} callback the callback to check
@@ -17,20 +41,7 @@
      * @return {Boolean}          whether or not the callback is already subscribed
      */
     Vent.prototype.isSubscribed = function(name, callback, bind) {
-        this.__subscriptions = this.__subscriptions || {};
-        bind = bind || this;
-
-        if(name in this.__subscriptions) {
-            var sub;
-            for(sub in this.__subscriptions[name]) {
-                var cb = this.__subscriptions[name][sub].callback;
-                var b  = this.__subscriptions[name][sub].bind;
-
-                if(cb === callback && b === bind) return true;
-            }
-        }
-
-        return false;
+        return (this.retrieveSubscription(name, callback, bind) !== null);
     };
 
     /**
@@ -38,6 +49,7 @@
      * @param  {String}   name     the event name
      * @param  {Function} callback the callback to trigger
      * @param  {Object}   bind     an object to bind to (e.g. class instance)
+     * @return {Object}            subscription object
      */
     Vent.prototype.subscribe = function(name, callback, bind) {
         this.__subscriptions = this.__subscriptions || {};
@@ -47,12 +59,31 @@
 
         bind = bind || this;
 
-        if(!this.isSubscribed(name, callback, bind)) {
-            this.__subscriptions[name].push({
+        var sub = this.retrieveSubscription(name, callback, bind);
+
+        if(sub === null) {
+            sub = {
                 callback: callback,
-                bind:     bind
-            });
+                bind:     bind,
+                once:     false
+            };
+            this.__subscriptions[name].push(sub);
         }
+
+        return sub;
+    };
+
+    /**
+     * Subscribe to an event once only
+     * @param {String}   name     the event name
+     * @param {Function} callback the callback to trigger
+     * @param {Object}   bind     an object to bind to (e.g. class instance)
+     * @return {Object}           subscription object
+     */
+    Vent.prototype.subscribeOnce = function (name, callback, bind) {
+        var sub = this.subscribe(name, callback, bind);
+        sub.once = true;
+        return sub;
     };
 
     /**
@@ -89,14 +120,30 @@
 
         if(name in this.__subscriptions) {
             var l = this.__subscriptions[name];
+            var c = l.length;
+            var delete_queue = [];
 
-            for(var i in l) {
-                var cb = l[i].callback;
-                var b  = l[i].bind;
+            for(var i = 0; i < c; i++) {
+                var sub  = l[i];
+                var cb   = sub.callback;
+                var b    = sub.bind;
+                var once = sub.once || false;
 
                 if(typeof cb == 'function') {
                     cb.apply(b, args);
                 }
+
+                if(once) {
+                    delete_queue.push(i);
+                }
+            }
+
+            if(delete_queue.length > 0) {
+                var clean = l.filter(function(item, index) {
+                    return (delete_queue.indexOf(index) == -1);
+                });
+
+                this.__subscriptions[name] = clean;
             }
         }
     };

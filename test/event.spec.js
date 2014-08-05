@@ -19,6 +19,36 @@ define(['jasmine/boot', 'event'], function() {
             expect(E.__subscriptions.test[0].bind).toEqual(E);
         });
 
+        it('subscribes one-off callbacks', function() {
+            var j = jasmine.createSpy('callMeLots');
+            var k = jasmine.createSpy('callMeOnce');
+
+            E.subscribe('test', j);
+            E.subscribeOnce('test', k);
+
+            E.publish('test');
+
+            expect(j.calls.count()).toEqual(1);
+            expect(k.calls.count()).toEqual(1);
+
+            E.publish('test');
+
+            expect(j.calls.count()).toEqual(2);
+            expect(k.calls.count()).toEqual(1);
+        });
+
+        it('retrieves a subscription object', function() {
+            var j = jasmine.createSpy('testCallback');
+            var s;
+
+            E.subscribe('test', j);
+
+            s = E.retrieveSubscription('test', j);
+
+            expect(s.callback).toEqual(j);
+            expect(s.bind).toEqual(E);
+        });
+
         it('allows us to query a subscription with isSubscribed()', function() {
             var j = jasmine.createSpy('testCallback');
 
