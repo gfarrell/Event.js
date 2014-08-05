@@ -1,6 +1,6 @@
 {
   "name": "event.js",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Event.js tries to plug the gaps in other event pub/sub bind/trigger or whatever-method-you-use libraries. It's extremely simple, but shouldn't do anything you don't expect.",
   "main": "event.js",
   "directories": {
